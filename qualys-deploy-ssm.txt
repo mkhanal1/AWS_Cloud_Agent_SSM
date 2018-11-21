@@ -1,0 +1,198 @@
+{
+  "schemaVersion": "2.2",
+  "description": "Manage Qualys Cloud Agent on EC2 instances",
+  "parameters": {
+    "ActivationID": {
+      "type": "String",
+      "description": "(Required) Enter ActivationID obtained from Qualys CP "
+    },
+    "CustomerID": {
+      "type": "String",
+      "description": "(Required) Enter CustomerID as displayed in your account"
+    },
+    "AgentLocationWindows": {
+      "type": "String",
+      "default": "",
+      "description": "(Optional) Enter FQDN or full path of Windows Qualys Cloud Agent Installer's location"
+    },
+    "AgentLocationDebian": {
+      "type": "String",
+      "default": "",
+      "description": "(Optional) Enter FQDN or full path of Debian Qualys Cloud Agent Installer's location"
+    },
+    "AgentLocationRPM": {
+      "type": "String",
+      "default": "",
+      "description": "(Optional) Enter FQDN or full path of RPM Qualys Cloud Agent Installer's location"
+    },
+    "LogLevel": {
+      "type": "String",
+      "default": "0",
+      "description": "(Optional)  A higher value corresponds to more verbosity. Default is to report only errors (0) ",
+      "allowedValues": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ]
+    }
+  },
+  "mainSteps": [
+    {
+      "precondition": {
+        "StringEquals": [
+          "platformType",
+          "Linux"
+        ]
+      },
+      "action": "aws:runShellScript",
+      "name": "InstallQualysCloudAgentOnLinux",
+      "inputs": {
+        "id": "0.aws:runShellScript",
+        "timeoutSeconds": 600,
+        "runCommand": [
+          "#!/bin/bash",
+          "#set -eux",
+          "#Check Whether the Qualys Cloud Agent is already installed",
+          "status=$( sudo service qualys-cloud-agent status | grep Active )",
+          "if [[ -z \"$status\" ]];",
+          "then",
+          "     # Check whether curl or wget is present in the system",
+          "     if hash curl 2>/dev/null",
+          "     then",
+          "         DOWNLOAD_CMD=\"curl -s --fail --retry 5 --max-time 30\"",
+          "         CONSOLE_ARG=\"\"",
+          "         TO_FILE_ARG=\" -o \"",
+          "         HEADER_ARG=\" --head \"",
+          "     else",
+          "         DOWNLOAD_CMD=\"wget --quiet --tries=5 --timeout=30 \"",
+          "         CONSOLE_ARG=\" -qO- \"",
+          "         TO_FILE_ARG=\" -O \"",
+          "         HEADER_ARG=\" -S --spider \"",
+          "     fi",
+          "     # Check whether the OS is Debian or RPM based Linux and set the download location",
+          "     os=$( grep -Ei 'debian|buntu|mint' /etc/*release )",
+          "     if [[ -n \"$os\" || -f \"/etc/debian_version\" ]];",
+          "     then",
+          "         INSTALLER_FILE_URL={{ AgentLocationDebian }}",
+          "         opersys=\"DEB\"",
+          "     else",
+          "         INSTALLER_FILE_URL={{ AgentLocationRPM }}",
+          "         opersys=\"RPM\"",
+          "     fi",
+          "     Downloadfile()",
+          "     {",
+          "         ${DOWNLOAD_CMD} ${TO_FILE_ARG} qualys-cloud-agent.x86_64 ${INSTALLER_FILE_URL}",
+          "         if [[ $? != 0 ]];",
+          "         then",
+          "             echo \"Failed to download installer from ${INSTALLER_FILE_URL}\"",
+          "             exit 3",
+          "         fi",
+          "     }",
+          "     # Checks whether agent location is a FQDN or full path and invoke download or copy function ",
+          "     if [[ -n \"$INSTALLER_FILE_URL\" ]]; ",
+          "     then",
+          "         if [[ \"${INSTALLER_FILE_URL:0:4}\" == 'http' ]] ; ",
+          "         then",
+          "                 Downloadfile",
+          "         else",
+          "             cp $INSTALLER_FILE_URL qualys-cloud-agent.x86_64 ",
+          "         fi",
+          "     else",
+          "         echo \"No installation path specified for Qualys Cloud Agent\"",
+          "             exit 4",
+          "     fi",
+          "     if [ \"$opersys\" = \"RPM\" ];",
+          "     then",
+          "                 sleep 5",
+          "                 sudo rpm -ivh qualys-cloud-agent.x86_64",
+          "                 sleep 5",
+          "                 sudo /usr/local/qualys/cloud-agent/bin/qualys-cloud-agent.sh LogLevel={{ LogLevel }} ActivationId={{ ActivationID }} CustomerId={{ CustomerID }}",
+          "     else",
+          "         sudo dpkg --install qualys-cloud-agent.x86_64",
+          "         sleep 5",
+          "         sudo /usr/local/qualys/cloud-agent/bin/qualys-cloud-agent.sh LogLevel={{ LogLevel }} ActivationId={{ ActivationID }} CustomerId={{ CustomerID }}",
+          "     fi",
+          "else",
+          "echo \"QualysCloudAgent is already installed on this and running\"",
+          "fi"
+        ]
+      }
+    },
+    {
+      "precondition": {
+        "StringEquals": [
+          "platformType",
+          "Windows"
+        ]
+      },
+      "action": "aws:runPowerShellScript",
+      "name": "InstallQualysCloudAgentOnWindows",
+      "inputs": {
+        "id": "0.aws:runPowerShellScript",
+        "timeoutSeconds": 600,
+        "runCommand": [
+          "function New-TemporaryDirectory {",
+          "  $parent = [System.IO.Path]::GetTempPath()",
+          "  [string] $name = [System.Guid]::NewGuid()",
+          "  New-Item -ItemType Directory -Path (Join-Path $parent $name)",
+          "}",
+          "$tempdir = New-TemporaryDirectory",
+          "Set-Location -Path $tempdir",
+          "$agentInstaller=\"QualysCloudAgent.exe\"",
+          "$agentInstallerlog=Join-Path $tempdir $agentInstaller",
+          "if (Get-Service \"QualysAgent\" -ErrorAction SilentlyContinue)",
+          "{",
+          "  Write-Host \"Qualys Cloud Agent is already installed, Exiting\"",
+          "  exit 0",
+          "}",
+          "#Download the Qualys Cloud agent",
+          "Function Download_file",
+          "{",
+          "     Try",
+          "     {",
+          "         Invoke-WebRequest $installerUrl -OutFile $agentInstallerlog",
+          "     }",
+          "     Catch",
+          "     {",
+          "         Write-Host \"Error while downloading installer\"",
+          "         Write-Host $_.Exception|format-list -force",
+          "         exit 3",
+          "     }",
+          "}",
+          "#Check whether agent location is a FQDN or full path and invoke download or copy function",
+          "if ('{{ AgentLocationWindows }}' -ne '')",
+          "{",
+          "     $installerUrl = '{{ AgentLocationWindows }}'",
+          "     if ( $installerUrl.Substring(0,4) -eq 'http')",
+          "     {",
+          "         Download_file",
+          "     }",
+          "     Else",
+          "     {",
+          "         Copy-Item $agentInstallerlog ",
+          "     }",
+          "}",
+          "Else ",
+          "{",
+          "     Write-Host \"No installation path specified for Qualys Cloud Agent\"",
+          "     exit 5",
+          "}",
+          "# Install the Qualys Cloud Agent",
+          "Try",
+          "{",
+          "     & $agentInstallerlog CustomerId={{ CustomerID }} ActivationId={{ ActivationID }}",
+          "}",
+          "Catch",
+          "{",
+          "     Write-Host \"Installation failed, exception raised during installation\"",
+          "     Write-Host $_.Exception|format-list -force",
+          "     exit 6",
+          "}"
+        ]
+      }
+    }
+  ]
+}
