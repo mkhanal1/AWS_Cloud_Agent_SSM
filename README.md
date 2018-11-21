@@ -7,7 +7,7 @@ Follow the steps mentioned below to utilize the document to install Qualys Cloud
 2.	In the navigation pane under Systems Manager Services, choose Run Command.
 3.	For Command document, search with Owner : Equal : Public and then choose the document QualysCloudAgent-Install with search string Document name prefix : Equal : QualysCloudAgent-Install.
 4.	This document will open a form which you need to fill for installing the cloud agent.
-There are five required options which you must input. They are ActivationID: An ID to authenticate agents so that they could be grouped and bind to your account and CustomerID: An ID to identify your account and AgentLocation[Windows:Debian:RPM]: the FQDN or full path of the Qualys cloud agent. 
+There are two required options which you must input. They are ActivationID: An ID to authenticate agents so that they could be grouped and bind to your account and CustomerID: An ID to identify your account 
 # Note: The same document can be used to install Qualys CA on Windows and Debian or RPM based Linux instances.
 5.	Specify your EC2 instances either by choosing the Specifying a Tag option or by Manually Selecting Instances and then selecting Select instances.
 6.	Provide your choices for the rest of the available options using the instructions in Executing Commands from the EC2 Console, and then select Run.
