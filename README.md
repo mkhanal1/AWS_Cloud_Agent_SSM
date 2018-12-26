@@ -18,9 +18,13 @@ There are two required options which you must input. They are ActivationID: An I
 The SSM Document is tested on following Operating systems:
 
 o	Amazon Linux 2
+
 o	CentOS Linux 7.5.1804 (Core) 
+
 o	Red Hat Enterprise Linux Server 7.5 
+
 o	Ubuntu Linux 14.04.5 
+
 o	Microsoft Windows Server 2012 and their service packs
 
 # Note:To utilize this option, make sure that your EC2 instance has the SSM Agent installed and has an IAM role that allows Run Command. For more information, see 
