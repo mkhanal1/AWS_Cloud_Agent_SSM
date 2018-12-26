@@ -16,6 +16,7 @@ There are two required options which you must input. They are ActivationID: An I
 6.	Provide your choices for the rest of the available options using the instructions in Executing Commands from the EC2 Console, and then select Run.
 
 The SSM Document is tested on following Operating systems:
+
 o	Amazon Linux 2
 o	CentOS Linux 7.5.1804 (Core) 
 o	Red Hat Enterprise Linux Server 7.5 
