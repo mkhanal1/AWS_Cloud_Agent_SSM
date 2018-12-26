@@ -12,6 +12,7 @@ There are two required options which you must input. They are ActivationID: An I
 ![parameters](parameters.png?raw=true "Parameters")
 # Note: The same document can be used to install Qualys CA on Windows and Debian or RPM based Linux instances.
 5.	Specify your EC2 instances either by choosing the Specifying a Tag option or by Manually Selecting Instances and then selecting Select instances.
+
 ![results](results.png?raw=true "results")
 6.	Provide your choices for the rest of the available options using the instructions in Executing Commands from the EC2 Console, and then select Run.
 
