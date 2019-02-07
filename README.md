@@ -1,6 +1,10 @@
 # deploy_qualys_SSM
-# deploy Qualys Cloud Agent via Run command to AWS managed instances using SSM Documents
+### deploy Qualys Cloud Agent via Run command to AWS managed instances using SSM Documents
 
+# License
+_**THIS SCRIPT IS PROVIDED TO YOU "AS IS."  TO THE EXTENT PERMITTED BY LAW, QUALYS HEREBY DISCLAIMS ALL WARRANTIES AND LIABILITY FOR THE PROVISION OR USE OF THIS SCRIPT.  IN NO EVENT SHALL THESE SCRIPTS BE DEEMED TO BE CLOUD SERVICES AS PROVIDED BY QUALYS**_
+
+# Usage:
 Follow the steps mentioned below to utilize the document to install Qualys Cloud agent.
 
 1.	Open the AWS Systems Manager console. 
@@ -16,7 +20,7 @@ There are two required options which you must input. They are ActivationID: An I
 
 ![parameters](parameters.png?raw=true "Parameters")
 
-# Note: The same document can be used to install Qualys CA on Windows and Debian or RPM based Linux instances.
+**Note: The same document can be used to install Qualys CA on Windows and Debian or RPM based Linux instances.**
 
 5.	Specify your EC2 instances either by choosing the Specifying a Tag option or by Manually Selecting Instances and then selecting Select instances.
 
@@ -26,16 +30,16 @@ There are two required options which you must input. They are ActivationID: An I
 
 The SSM Document is tested on following Operating systems:
 
-o	Amazon Linux 2
+*	Amazon Linux 2
 
-o	CentOS Linux 7.5.1804 (Core) 
+* CentOS Linux 7.5.1804 (Core) 
 
-o	Red Hat Enterprise Linux Server 7.5 
+*	Red Hat Enterprise Linux Server 7.5 
 
-o	Ubuntu Linux 14.04.5 
+*	Ubuntu Linux 14.04.5 
 
-o	Microsoft Windows Server 2012 and their service packs
+*	Microsoft Windows Server 2012 and their service packs
 
-# Note:To utilize this option, make sure that your EC2 instance has the SSM Agent installed and has an IAM role that allows Run Command. For more information, see 
-Installing and Configuring SSM Agent http://docs.aws.amazon.com/systems-manager/latest/userguide/ssm-agent.html 
-Configuring Security Roles for System Manager http://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-access.html
+**Note:To utilize this option, make sure that your EC2 instance has the SSM Agent installed and has an IAM role that allows Run Command. For more information, refer the below links:**
+[Installing and Configuring SSM Agent](http://docs.aws.amazon.com/systems-manager/latest/userguide/ssm-agent.html)
+[Configuring Security Roles for System Manager](http://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-access.html)
