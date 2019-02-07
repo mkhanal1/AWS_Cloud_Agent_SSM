@@ -1,5 +1,5 @@
 # deploy_qualys_SSM
-### deploy Qualys Cloud Agent via Run command to AWS managed instances using SSM Documents
+**deploy Qualys Cloud Agent via Run command to AWS managed instances using SSM Documents**
 
 # License
 _**THIS SCRIPT IS PROVIDED TO YOU "AS IS."  TO THE EXTENT PERMITTED BY LAW, QUALYS HEREBY DISCLAIMS ALL WARRANTIES AND LIABILITY FOR THE PROVISION OR USE OF THIS SCRIPT.  IN NO EVENT SHALL THESE SCRIPTS BE DEEMED TO BE CLOUD SERVICES AS PROVIDED BY QUALYS**_
