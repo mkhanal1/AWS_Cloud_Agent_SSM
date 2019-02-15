@@ -1,4 +1,4 @@
-# deploy_qualys_SSM
+# AWS_Cloud_Agent_SSM
 **Deploy Qualys Cloud Agent via Run command to AWS managed instances using SSM Documents**
 
 # License
@@ -16,8 +16,10 @@ Follow the steps mentioned below to utilize the document to install Qualys Cloud
 ![qca](/images/qca.png?raw=true "QCA")
 
 4.	This document will open a form which you need to fill for installing the Cloud Agent.
-There are two required options which you must provide. 
+There are two required options which you must provide.
+
  **ActivationID:** An ID to authenticate agents so that they could be grouped and bind to your account 
+ 
  **CustomerID:** An ID to identify your account.
 
 ![parameters](/images/parameters.png?raw=true "Parameters")
