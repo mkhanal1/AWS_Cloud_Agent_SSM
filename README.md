@@ -1,10 +1,10 @@
 # AWS_Cloud_Agent_SSM
-**Deploy Qualys Cloud Agent via Run command to AWS managed instances using SSM Documents**
+Deploy Qualys Cloud Agent via Run command to AWS managed instances using SSM Documents
 
-# License
+## License
 _**THIS SCRIPT IS PROVIDED TO YOU "AS IS."  TO THE EXTENT PERMITTED BY LAW, QUALYS HEREBY DISCLAIMS ALL WARRANTIES AND LIABILITY FOR THE PROVISION OR USE OF THIS SCRIPT.  IN NO EVENT SHALL THESE SCRIPTS BE DEEMED TO BE CLOUD SERVICES AS PROVIDED BY QUALYS**_
 
-# Usage:
+## Usage:
 Follow the steps mentioned below to utilize the document to install Qualys Cloud Agent.
 
 1.	Open the AWS Systems Manager console. 
@@ -44,7 +44,9 @@ The SSM Document is tested on following Operating systems:
 
 *	Microsoft Windows Server 2012 and their service packs
 
-**Note:To utilize this option, make sure that your EC2 instance has the SSM Agent installed and has an IAM role that allows Run Command. For more information, refer the below links:**
+## Important links
+
+**_Note:To utilize this option, make sure that your EC2 instance has the SSM Agent installed and has an IAM role that allows Run Command. For more information, refer the below links:_**
 
 * [Installing and Configuring SSM Agent](http://docs.aws.amazon.com/systems-manager/latest/userguide/ssm-agent.html)
 * [Configuring Security Roles for System Manager](http://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-access.html)
