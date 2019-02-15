@@ -1,11 +1,11 @@
 # deploy_qualys_SSM
-**deploy Qualys Cloud Agent via Run command to AWS managed instances using SSM Documents**
+**Deploy Qualys Cloud Agent via Run command to AWS managed instances using SSM Documents**
 
 # License
 _**THIS SCRIPT IS PROVIDED TO YOU "AS IS."  TO THE EXTENT PERMITTED BY LAW, QUALYS HEREBY DISCLAIMS ALL WARRANTIES AND LIABILITY FOR THE PROVISION OR USE OF THIS SCRIPT.  IN NO EVENT SHALL THESE SCRIPTS BE DEEMED TO BE CLOUD SERVICES AS PROVIDED BY QUALYS**_
 
 # Usage:
-Follow the steps mentioned below to utilize the document to install Qualys Cloud agent.
+Follow the steps mentioned below to utilize the document to install Qualys Cloud Agent.
 
 1.	Open the AWS Systems Manager console. 
 
@@ -15,14 +15,16 @@ Follow the steps mentioned below to utilize the document to install Qualys Cloud
 
 ![qca](/images/qca.png?raw=true "QCA")
 
-4.	This document will open a form which you need to fill for installing the cloud agent.
-There are two required options which you must input. They are ActivationID: An ID to authenticate agents so that they could be grouped and bind to your account and CustomerID: An ID to identify your account.
+4.	This document will open a form which you need to fill for installing the Cloud Agent.
+There are two required options which you must provide. 
+ **ActivationID:** An ID to authenticate agents so that they could be grouped and bind to your account 
+ **CustomerID:** An ID to identify your account.
 
 ![parameters](/images/parameters.png?raw=true "Parameters")
 
-**Note: The same document can be used to install Qualys CA on Windows and Debian or RPM based Linux instances.**
+**Note: The same document can be used to install Qualys Cloud Agent on Windows and Debian or RPM based Linux instances.**
 
-5.	Specify your EC2 instances either by choosing the Specifying a Tag option or by Manually Selecting Instances and then selecting Select instances.
+5.	Specify your EC2 instances either by choosing the Specifying a Tag option or by choosing Manually Selecting Instances option and then selecting Select instances.
 
 ![results](/images/results.png?raw=true "results")
 
